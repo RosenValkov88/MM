@@ -1,0 +1,102 @@
+function calcStarsM(N, i) {
+  if(i>=(N+1)/2){
+      return N ;
+  }
+  return N + 2*(i);
+}
+
+function reverseString(str) {
+    return str.split("").reverse().join("");
+}
+reverseString("hello");
+
+function printSingleM(canvas, startPos, endPos, N) {
+  for(let i=0; i<canvas.length; i++){ //go through each line
+    for(let j=startPos; j<endPos; j++){
+      let curPos = startPos;
+      for(let k=startPos; k<N-i; k++) { //cal number of first '-'
+        canvas[i][k] = "-";
+        curPos++;
+      }
+
+
+      for(let k=N-i; k<N-i+calcStarsM(N, i); k++) { //cal number of first '-'
+        canvas[i][k] = "*";
+        curPos++;
+      }
+
+
+      //right part of M
+      for(let k=N-i+calcStarsM(N, i); k<N-i+calcStarsM(N, i)+N-i+calcStarsM(N, i)-(i); k++) { //cal number of first '-'
+        canvas[i][k] = "*";
+        curPos++;
+      }
+
+      for(let k=N-i+calcStarsM(N, i)+N-i+calcStarsM(N, i); k<N-i+calcStarsM(N, i)+N-i+calcStarsM(N, i)+N-(i); k++) { //cal number of first '-'
+        canvas[i][k] = "-";
+        curPos++;
+      }
+      //--right part of M
+
+      for(let k=N-i+calcStarsM(N, i); k<N-i+N+N; k++) { //cal number of first '-'
+        canvas[i][k] = "-";
+        curPos++;
+      }
+
+      //lower part
+      if(i>=(N+1)/2){
+        for(let k=N-i+1+(i*2-1); k<N-i+1+(i*2-1)+calcStarsM(N, i); k++) { //cal number of first '-'
+          canvas[i][k] = "*";
+          curPos++;
+        }
+
+        //right part of M
+        let lineAfterHalf = i - (N+1)/2;
+        for(let k=N-i+1+(i*2-1)+calcStarsM(N, i); k<N-i+1+(i*2-1)+calcStarsM(N, i)+(N-(lineAfterHalf*2+1)); k++) { //cal number of first '-'
+          canvas[i][k] = "*";
+          curPos++;
+        }
+
+      for(let k=N-i+1+(i*2-1)+calcStarsM(N, i)+(N-(lineAfterHalf*2+1)); k<N-i+1+(i*2-1)+calcStarsM(N, i)+(N-(lineAfterHalf*2+1))+1+(lineAfterHalf*2); k++) { //cal number of first '-'
+        canvas[i][k] = "-";
+        curPos++;
+      }
+
+      for(let k=N-i+1+(i*2-1)+calcStarsM(N, i)+(N-(lineAfterHalf*2+1))+1+(lineAfterHalf*2); k<N-i+1+(i*2-1)+calcStarsM(N, i)+(N-(lineAfterHalf*2+1))+1+(lineAfterHalf*2)+calcStarsM(N, i); k++) { //cal number of first '-'
+        canvas[i][k] = "*";
+        curPos++;
+      }
+
+
+      for(let k=N-i+1+(i*2-1)+calcStarsM(N, i)+(N-(lineAfterHalf*2+1))+1+(lineAfterHalf*2)+calcStarsM(N, i); k<N-i+1+(i*2-1)+calcStarsM(N, i)+(N-(lineAfterHalf*2+1))+1+(lineAfterHalf*2)+calcStarsM(N, i)+(i-(2*lineAfterHalf))-1; k++) { //cal number of first '-'
+        canvas[i][k] = "-";
+        curPos++;
+      }
+        //---right part of M
+
+      }
+
+      
+    }
+  }
+}
+
+
+let N = 3;
+
+let canvas = new Array(N+1);
+for(let i=0; i<N+1; i++){
+  canvas[i] = new Array(N*5*2);
+}
+printSingleM(canvas, 0, N/2, N);
+
+
+for(let i=0; i<canvas.length; i++){
+  let line = "";
+  for(let j=0; j<canvas[0].length; j++){
+    line += canvas[i][j] || "";
+  }
+  console.log(line.repeat(2));
+    line += "\n";
+
+}
